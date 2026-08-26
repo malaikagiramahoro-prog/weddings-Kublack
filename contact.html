@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Contact — Weddings by Kublack</title>
+<meta name="description" content="Get in touch with Weddings by Kublack — send an inquiry, leave a review, call, or message on WhatsApp." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="contact">
+
+  <section class="page-banner page-banner--small">
+    <img class="page-banner__image" src="images\image5.jpg.jpeg" alt="Contact" />
+    <div class="page-banner__scrim"></div>
+    <div class="page-banner__content container">
+      <span class="eyebrow" style="color:#fff;" data-en="Contact" data-fr="Contact">Contact</span>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container">
+      <div class="category-intro">
+        <p data-en="Have a wedding to plan or a story to share? We'd love to hear from you."
+           data-fr="Vous avez un mariage à planifier ou une histoire à partager ? Nous serions ravis de vous entendre.">
+          Have a wedding to plan or a story to share? We'd love to hear from you.
+        </p>
+      </div>
+
+      <div class="contact-split">
+
+        <!-- Form -->
+        <div class="contact-form-wrap">
+          <form id="contactForm" class="contact-form">
+
+            <div class="field-group">
+              <label data-en="I'm reaching out to..." data-fr="Je vous contacte pour...">I'm reaching out to...</label>
+              <div class="reason-toggle">
+                <button type="button" class="reason-btn is-active" data-reason="inquiry" data-en="Make an Inquiry" data-fr="Faire une demande">Make an Inquiry</button>
+                <button type="button" class="reason-btn" data-reason="review" data-en="Leave a Review" data-fr="Laisser un avis">Leave a Review</button>
+              </div>
+              <input type="hidden" id="reasonField" value="Make an Inquiry" />
+            </div>
+
+            <div class="field-group">
+              <label for="name" data-en="Full Name" data-fr="Nom complet">Full Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+
+            <div class="field-group">
+              <label for="email" data-en="Email Address" data-fr="Adresse e-mail">Email Address</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+
+            <div class="field-group">
+              <label for="phone" data-en="Phone Number (optional)" data-fr="Numéro de téléphone (facultatif)">Phone Number (optional)</label>
+              <input type="tel" id="phone" name="phone" />
+            </div>
+
+            <div class="field-group">
+              <label for="message" id="messageLabel" data-en="Your Message" data-fr="Votre message">Your Message</label>
+              <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+
+            <button type="submit" class="btn" data-en="Send Message" data-fr="Envoyer le message">Send Message</button>
+            <p class="form-note" data-en="This opens your email app with the message ready to send to us."
+               data-fr="Cela ouvrira votre application e-mail avec le message prêt à nous être envoyé.">
+              This opens your email app with the message ready to send to us.
+            </p>
+          </form>
+        </div>
+
+        <!-- Direct contact -->
+        <div class="contact-direct">
+          <span class="eyebrow" data-en="Reach Us Directly" data-fr="Contactez-nous directement">Reach Us Directly</span>
+
+          <a class="contact-direct__item" href="tel:+250780610421">
+            <span class="contact-direct__label" data-en="Phone" data-fr="Téléphone">Phone</span>
+            <span class="contact-direct__value" data-en="Call Us" data-fr="Appelez-nous">Call Us</span>
+          </a>
+
+          <a class="contact-direct__item" href="https://wa.me/250780610421" target="_blank" rel="noopener">
+            <span class="contact-direct__label">WhatsApp</span>
+            <span class="contact-direct__value" data-en="Message us on WhatsApp" data-fr="Écrivez-nous sur WhatsApp">Message us on WhatsApp</span>
+          </a>
+
+          <div class="contact-direct__note">
+            <p data-en="We typically respond within 24-48 hours."
+               data-fr="Nous répondons généralement sous 24 à 48 heures.">
+              We typically respond within 24-48 hours.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script src="script.css"></script>
+  <script>
+    // Reason toggle (Inquiry / Review)
+    var reasonButtons = document.querySelectorAll('.reason-btn');
+    var reasonField = document.getElementById('reasonField');
+    var messageLabel = document.getElementById('messageLabel');
+
+    reasonButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        reasonButtons.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        reasonField.value = btn.textContent.trim();
+      });
+    });
+
+    // Build a mailto link from the form fields on submit
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      var reason = reasonField.value;
+      var name = document.getElementById('name').value;
+      var email = document.getElementById('email').value;
+      var phone = document.getElementById('phone').value;
+      var message = document.getElementById('message').value;
+
+      var subject = reason + ' — ' + name;
+      var body =
+        'Name: ' + name + '\n' +
+        'Email: ' + email + '\n' +
+        (phone ? 'Phone: ' + phone + '\n' : '') +
+        'Reason: ' + reason + '\n\n' +
+        'Message:\n' + message;
+
+      var mailtoLink =
+        'mailto:ldegonzague2012@gmail.com' +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+
+      window.location.href = mailtoLink;
+    });
+  </script>
+</body>
+</html>

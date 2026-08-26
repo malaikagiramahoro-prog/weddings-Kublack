@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Films — Weddings by Kublack</title>
+<meta name="description" content="Wedding and couple films — motion and sound, for days that deserve more than stills." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="gallery">
+
+  <section class="page-banner page-banner--small">
+    <img class="page-banner__image" src="https://images-pw.pixieset.com/site/gjeXEw/z3PWdL/KUR61625-e3b5e5ef-1500.JPG" alt="Wedding film coverage" />
+    <div class="page-banner__scrim"></div>
+    <div class="page-banner__content container">
+      <span class="eyebrow" style="color:#fff;" data-en="Films" data-fr="Films">Films</span>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="category-intro">
+        <p data-en="Motion and sound, for days that deserve more than stills, relive your day exactly as it felt." data-fr="Mouvement et son, pour des journées qui méritent plus que des photos, revivez votre journée exactement comme vous l'avez ressentie.">Motion and sound, for days that deserve more than stills, relive your day exactly as it felt.</p>
+      </div>
+
+      <div class="video-grid">
+
+        <div class="video-card">
+          <div class="video-card__cover" data-youtube-url="https://youtu.be/ivOWL-rQ9RE?si=cSJChDreBHvjmjTo" role="button" tabindex="0" aria-label="Play film">
+            <img src="images/image21.jpg" alt="Wedding film cover" onerror="this.style.display='none'">
+            <div class="video-overlay">
+              <span class="play-circle"></span>
+              <span class="video-overlay__label" data-en="Play" data-fr="Lire">Play</span>
+            </div>
+          </div>
+          <p class="video-card__caption" data-en="A glimpse into Nadege's Traditional wedding." data-fr="Un aperçu du mariage traditionnel de Nadege, la célébration de la dot.">A glimpse into Nadege's Traditional wedding.</p>
+        </div>
+
+        <div class="video-card">
+          <div class="video-card__cover" data-youtube-url="https://youtu.be/8EDfQsVRDjU?si=xZupJ-Vg46XwiJB4" role="button" tabindex="0" aria-label="Play film">
+            <img src="images/image24.jpeg" alt="Wedding film cover" onerror="this.style.display='none'">
+            <div class="video-overlay">
+              <span class="play-circle"></span>
+              <span class="video-overlay__label" data-en="Play" data-fr="Lire">Play</span>
+            </div>
+          </div>
+          <p class="video-card__caption" data-en="Two families, one beautiful celebration. Naomi and Michael's wedding" data-fr="Deux familles, une magnifique célébration. Le mariage de Naomi et Michael">Two families, one beautiful celebration. Naomi and Michael's wedding</p>
+        </div>
+
+        <div class="video-card">
+          <div class="video-card__cover" data-youtube-url="https://youtu.be/yvJugQJ9k5Y?si=7PldJtt_fk059cMy" role="button" tabindex="0" aria-label="Play film">
+            <img src="images/image127.jpg" alt="Wedding film cover" onerror="this.style.display='none'">
+            <div class="video-overlay">
+              <span class="play-circle"></span>
+              <span class="video-overlay__label" data-en="Play" data-fr="Lire">Play</span>
+            </div>
+          </div>
+          <p class="video-card__caption" data-en="Karen & Bryan's love story told in motion." data-fr="L'histoire d'amour de Karen et Bryan.">Karen & Bryan's love story told in motion.</p>
+        </div>
+
+      </div>
+
+      <div class="text-center">
+        <a href="gallery.html" class="back-link" data-en="← Back to Gallery" data-fr="← Retour à la Galerie">← Back to Gallery</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--tight cta-band">
+    <div class="container text-center">
+      <span class="eyebrow" data-en="Want It On Film?" data-fr="Envie d'un Film ?">Want It On Film?</span>
+      <h2 data-en="Let's tell your story in motion." data-fr="Racontons votre histoire en mouvement.">Let's tell your story in motion.</h2>
+      <a href="contact.html" class="btn" data-en="Get In Touch" data-fr="Nous Contacter">Get In Touch</a>
+    </div>
+  </section>
+
+  <script src="script.css"></script>
+  <script>
+    // Play videos inline in their own box instead of leaving to YouTube
+    function extractYouTubeId(url) {
+      var match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([^?&\/]+)/);
+      return match ? match[1] : null;
+    }
+    document.querySelectorAll('.video-card__cover').forEach(function (cover) {
+      function play() {
+        var id = extractYouTubeId(cover.dataset.youtubeUrl);
+        if (!id) return;
+        cover.innerHTML =
+          '<iframe width="100%" height="100%" ' +
+          'src="https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0" ' +
+          'title="Wedding film" frameborder="0" ' +
+          'allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" ' +
+          'allowfullscreen></iframe>';
+      }
+      cover.addEventListener('click', play);
+      cover.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+      });
+    });
+  </script>
+</body>
+</html>

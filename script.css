@@ -1,0 +1,133 @@
+/* ==========================================================================
+   Shared header + footer, injected into every page.
+   Edit ONCE here and it updates across the whole site.
+   Set data-page="home|about|stories|gallery|team|pricing|contact"
+   on the <body> tag of each page to highlight the active nav link.
+
+   LANGUAGE TOGGLE (EN/FR):
+   - Any element with data-en="..." data-fr="..." attributes will have its
+     content swapped instantly when the EN/FR button is clicked.
+   - To translate new content, just add both attributes to the element,
+     e.g. <p data-en="Hello" data-fr="Bonjour">Hello</p>
+   - No page reload, no persistence across pages (each page loads in English
+     by default) — keeps things simple for a static, no-backend site.
+   ========================================================================== */
+
+const KUBLACK_NAV = [
+  { label: { en: "Home",     fr: "Accueil" },       href: "index.html",       key: "home" },
+  { label: { en: "About",    fr: "À Propos" },       href: "about.html",       key: "about" },
+  { label: { en: "Stories",  fr: "Témoignages" },    href: "stories.html",     key: "stories" },
+  { label: { en: "Gallery",  fr: "Galerie" },        href: "gallery.html",     key: "gallery" },
+  { label: { en: "Our Team", fr: "Notre Équipe" },   href: "team.html",        key: "team" },
+  { label: { en: "Packages", fr: "Forfaits" },        href: "pricing.html",     key: "pricing" },
+  { label: { en: "Contact",  fr: "Contact" },        href: "contact.html",     key: "contact" },
+];
+
+let kublackLang = "en";
+
+function renderHeader() {
+  const activeKey = document.body.getAttribute("data-page");
+  const links = KUBLACK_NAV.map(
+    (item) =>
+      `<a href="${item.href}" data-en="${item.label.en}" data-fr="${item.label.fr}"${item.key === activeKey ? ' class="is-active"' : ""}>${item.label.en}</a>`
+  ).join("");
+
+  const header = document.createElement("header");
+  header.className = "site-header";
+  header.innerHTML = `
+    <div class="container nav-row">
+      <a href="index.html" class="logo" aria-label="Weddings by Kublack — Home">
+        <span class="logo__mark"></span>
+      </a>
+      <nav>
+        <ul class="nav-links" id="navLinks">${links}</ul>
+      </nav>
+      <button class="lang-toggle" id="langToggle" aria-label="Switch language" type="button">FR</button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+      </button>
+    </div>
+  `;
+  document.body.prepend(header);
+
+  const toggle = document.getElementById("navToggle");
+  const navLinks = document.getElementById("navLinks");
+  toggle.addEventListener("click", () => {
+    const isOpen = navLinks.classList.toggle("is-open");
+    toggle.setAttribute("aria-expanded", String(isOpen));
+  });
+
+  document.getElementById("langToggle").addEventListener("click", () => {
+    setLanguage(kublackLang === "en" ? "fr" : "en");
+  });
+
+  // Solid header once the user scrolls past the hero (or always on non-hero pages)
+  const heroPage = document.querySelector("[data-has-hero]");
+  const makeSolidThreshold = heroPage ? window.innerHeight * 0.7 : 1;
+
+  function updateHeaderState() {
+    if (window.scrollY > makeSolidThreshold) {
+      header.classList.add("is-solid");
+    } else {
+      header.classList.remove("is-solid");
+    }
+  }
+  window.addEventListener("scroll", updateHeaderState);
+  updateHeaderState();
+}
+
+function renderFooter() {
+  const footer = document.createElement("footer");
+  footer.className = "site-footer";
+  footer.innerHTML = `
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>Weddings by Kublack</h4>
+          <p data-en="A branch of Ku Black Photography, dedicated to telling your love story through photographs and film." data-fr="Une branche de Ku Black Photography, dédiée à raconter votre histoire d'amour à travers la photo et le film.">A branch of Ku Black Photography, dedicated to telling your love story through photographs and film.</p>
+        </div>
+        <div>
+          <h4 data-en="Explore" data-fr="Explorer">Explore</h4>
+          <ul>
+            <li><a href="gallery.html" data-en="Gallery" data-fr="Galerie">Gallery</a></li>
+            <li><a href="stories.html" data-en="Stories" data-fr="Témoignages">Stories</a></li>
+            <li><a href="pricing.html" data-en="Packages" data-fr="Forfaits">Packages</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 data-en="Get in touch" data-fr="Nous contacter">Get in touch</h4>
+          <ul>
+            <li><a href="contact.html" data-en="Contact us" data-fr="Contactez-nous">Contact us</a></li>
+            <li><a href="contact.html" data-en="Leave a review" data-fr="Laisser un avis">Leave a review</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span data-en="&copy; 2026 Weddings by Kublack. All rights reserved." data-fr="&copy; 2026 Weddings by Kublack. Tous droits réservés.">&copy; 2026 Weddings by Kublack. All rights reserved.</span>
+        <div class="social-row">
+          <a href="https://www.instagram.com/weddingsbykublack/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.youtube.com/@WeddingsbyKublack" target="_blank" rel="noopener">YouTube</a>
+          <a href="https://twitter.com/kublacklgzg" target="_blank" rel="noopener">Twitter</a>
+        </div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(footer);
+}
+
+/* Swap every [data-en]/[data-fr] element on the page to the chosen language. */
+function setLanguage(lang) {
+  kublackLang = lang;
+  document.querySelectorAll("[data-en]").forEach((el) => {
+    const value = el.dataset[lang];
+    if (value !== undefined) el.innerHTML = value;
+  });
+  document.documentElement.lang = lang;
+  const btn = document.getElementById("langToggle");
+  if (btn) btn.textContent = lang === "en" ? "FR" : "EN";
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderHeader();
+  renderFooter();
+});
